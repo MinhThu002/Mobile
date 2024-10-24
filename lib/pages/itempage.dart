@@ -14,6 +14,8 @@ class itemPage extends StatelessWidget {
       body: ListView(
         children: [
           item_app_bar(),
+          //
+          // for (int i = 1; i < 8; i++)
           Padding(
             padding: EdgeInsets.all(16),
             child: Image.asset(

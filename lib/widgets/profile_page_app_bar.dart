@@ -1,8 +1,7 @@
+import 'package:coffee/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
-class cartappbar_widget extends StatelessWidget {
-  const cartappbar_widget({super.key});
-
+class ProfilePageAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,11 +27,11 @@ class cartappbar_widget extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 20),
           child: Text(
-            "cart",
+            "Profile",
             style: TextStyle(
               fontSize: 23,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey,
+              color: Colors.black,
             ),
           ),
         ),

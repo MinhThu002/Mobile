@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class loginScreen extends StatelessWidget {
-  const loginScreen({Key? key}) : super(key: key);
+  const loginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class loginScreen extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.only(top: 60.0, left: 22),
                 child: Text(
-                  'Hello\nSign in!',
+                  'Hello',
                   style: TextStyle(
                       fontSize: 30,
                       color: Colors.white,

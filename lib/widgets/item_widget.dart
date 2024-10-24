@@ -64,7 +64,7 @@ class item_widget extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Product Title",
+                    "DEER COFFEE",
                     style: TextStyle(
                         //18
                         fontSize: 30,

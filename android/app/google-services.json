@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777012001672",
+    "project_id": "fluttersignin-8ca8a",
+    "storage_bucket": "fluttersignin-8ca8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777012001672:android:3d1a7b085037a85701583d",
+        "android_client_info": {
+          "package_name": "com.example.coffee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp9oAmC_0g9EcEJcvpYjx3Qp2HCT0eKII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

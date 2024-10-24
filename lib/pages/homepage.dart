@@ -1,3 +1,4 @@
+import 'package:coffee/pages/profilepage.dart';
 import 'package:coffee/widgets/coffeeshop_widget.dart';
 import 'package:coffee/widgets/homeappbar.dart';
 import 'package:coffee/widgets/item_widget.dart';
@@ -12,7 +13,7 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: [
-          Homeappbar(),
+          Homepappbar(),
           Container(
             //temporary height
             // height: 500,
@@ -69,7 +70,7 @@ class Homepage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.brown),
+                        color: Colors.black),
                   ),
                 ),
 
@@ -85,7 +86,7 @@ class Homepage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: Colors.brown,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -98,7 +99,14 @@ class Homepage extends StatelessWidget {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        onTap: (Index) {},
+        onTap: (Index) {
+          if (Index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profilepage()),
+            );
+          }
+        },
         height: 70,
         color: Colors.blue,
         items: [
