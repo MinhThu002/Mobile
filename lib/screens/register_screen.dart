@@ -171,7 +171,7 @@ class _RegScreenState extends State<RegScreen> {
                             ),
                             child: const Center(
                               child: Text(
-                                'SIGN IN',
+                                'SIGN UP',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -188,21 +188,21 @@ class _RegScreenState extends State<RegScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Don't have account?",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                              ),
-                              Text(
-                                "Sign up",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                    color: Colors.black),
-                              ),
-                            ],
+                            // children: [
+                            //   Text(
+                            //     "Don't have account?",
+                            //     style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Colors.grey),
+                            //   ),
+                            //   Text(
+                            //     "Sign up",
+                            //     style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         fontSize: 17,
+                            //         color: Colors.black),
+                            //   ),
+                            // ],
                           ),
                         )
                       ],

@@ -1,12 +1,15 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-// class Mappage extends StatelessWidget {
-//   const Mappage({super.key});
+class Mappage extends StatefulWidget {
+  const Mappage({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     return Scaffold();
-//   }
-// }\
+  @override
+  State<Mappage> createState() => _MappageState();
+}
 
+class _MappageState extends State<Mappage> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

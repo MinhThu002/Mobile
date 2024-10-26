@@ -1,8 +1,6 @@
 import 'package:coffee/pages/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,53 +10,53 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  String email = "", password = "";
 
-  // // Hàm đăng nhập bằng email và mật khẩu
-  // Future<void> signInWithEmailAndPassword(BuildContext context) async {
-  //   try {
-  //     UserCredential userCredential = await FirebaseAuth.instance
-  //         .signInWithEmailAndPassword(
-  //             email: emailController.text.trim(),
-  //             password: passwordController.text.trim());
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
 
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => Homepage()));
+  final _formkey = GlobalKey<FormState>();
 
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //         content: Text(
-  //       "Đăng nhập thành công!",
-  //       style: TextStyle(fontSize: 18.0, color: Colors.white),
-  //     )));
-  //   } on FirebaseAuthException catch (e) {
-  //     String message = "";
-  //     if (e.code == 'user-not-found') {
-  //       message = "Tài khoản không tồn tại.";
-  //     } else if (e.code == 'wrong-password') {
-  //       message = "Mật khẩu không chính xác.";
-  //     } else {
-  //       message = "Đã xảy ra lỗi: ${e.message}";
-  //     }
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text(
-  //         message,
-  //         style: TextStyle(fontSize: 18.0, color: Colors.redAccent),
-  //       ),
-  //     ));
-  //   }
-  // }
+  signIn() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        "Sign In Successfully!",
+        style: TextStyle(fontSize: 20.0),
+      )));
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Homepage()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "Email address is wrong formatted",
+          style: TextStyle(fontSize: 18.0, color: Colors.black),
+        )));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "Wrong Email or Password",
+          style: TextStyle(fontSize: 18.0),
+        )));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        // Thêm cuộn để tránh tràn khi bàn phím xuất hiện
         child: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context)
-                  .size
-                  .height, // Đảm bảo chiều cao đầy đủ
+              height:
+                  MediaQuery.of(context).size.height, // Đảm bảo chiều cao đúng
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
@@ -69,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const Padding(
                 padding: EdgeInsets.only(top: 60.0, left: 22),
                 child: Text(
-                  'Hello',
+                  'Login',
                   style: TextStyle(
                       fontSize: 30,
                       color: Colors.white,
@@ -77,124 +75,132 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 200.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40)),
-                  color: Colors.white,
-                ),
-                height: MediaQuery.of(context).size.height *
-                    0.75, // Giới hạn chiều cao của container
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 18.0, right: 18),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const TextField(
-                        decoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.check,
-                              color: Colors.grey,
-                            ),
-                            label: Text(
-                              'Gmail',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(217, 0, 123, 255),
-                              ),
-                            )),
-                      ),
-                      const TextField(
-                        decoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.visibility_off,
-                              color: Colors.grey,
-                            ),
-                            label: Text(
-                              'Password',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(217, 0, 123, 255),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                            color: Color(0xff281537),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 70,
-                      ),
-                      Container(
-                        height: 55,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: const LinearGradient(colors: [
-                            Color.fromARGB(217, 0, 123, 255),
-                            Color(0xff281537),
-                          ]),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'SIGN IN',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 150,
-                      ),
-                      Container(
-                        child: SignInButton(
-                          Buttons.google,
-                          onPressed: () {
-                            signInWithGoogle(context);
+            Form(
+              key: _formkey,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 200.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40)),
+                    color: Colors.white,
+                  ),
+                  height: MediaQuery.of(context).size.height *
+                      0.75, // Giới hạn chiều cao của form
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          controller: emailcontroller,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please input email';
+                            }
+                            return null;
                           },
+                          decoration: InputDecoration(
+                              // suffixIcon: Icon(
+                              //   Icons.check,
+                              //   color: Colors.grey,
+                              // ),
+                              label: Text(
+                            'Email',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(217, 0, 123, 255),
+                            ),
+                          )),
                         ),
-                      ),
-                      // const Align(
-                      //   alignment: Alignment.bottomRight,
-                      //   child: Column(
-                      //     mainAxisAlignment: MainAxisAlignment.end,
-                      //     crossAxisAlignment: CrossAxisAlignment.end,
-                      //     children: [
-                      //       Text(
-                      //         "Don't have account?",
-                      //         style: TextStyle(
-                      //             fontWeight: FontWeight.bold,
-                      //             color: Colors.grey),
-                      //       ),
-                      //       Text(
-                      //         "Sign up",
-                      //         style: TextStyle(
-
-                      //             ///done login page
-                      //             fontWeight: FontWeight.bold,
-                      //             fontSize: 17,
-                      //             color: Colors.black),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
-                    ],
+                        TextFormField(
+                          obscureText: true,
+                          controller: passwordcontroller,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please input password';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              //  suffixIcon: Icon(
+                              //       Icons.check,
+                              //    color: Colors.grey,
+                              //  ),
+                              label: Text(
+                            'Password',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(217, 0, 123, 255),
+                            ),
+                          )),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const SizedBox(
+                          height: 70,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            if (_formkey.currentState!.validate()) {
+                              setState(() {
+                                email = emailcontroller.text;
+                                password = passwordcontroller.text;
+                              });
+                            }
+                            signIn();
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 300,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: const LinearGradient(colors: [
+                                Color.fromARGB(217, 0, 123, 255),
+                                Color(0xff281537),
+                              ]),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'SIGN IN',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 80,
+                        ),
+                        const Align(
+                          alignment: Alignment.bottomRight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            // children: [
+                            //   Text(
+                            //     "Don't have account?",
+                            //     style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Colors.grey),
+                            //   ),
+                            //   Text(
+                            //     "Sign up",
+                            //     style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         fontSize: 17,
+                            //         color: Colors.black),
+                            //   ),
+                            // ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -205,57 +211,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-signInWithGoogle(BuildContext context) async {
-  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-  AuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
-  UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
-  print(userCredential.user?.displayName);
-  print(userCredential.user?.email);
-  print(userCredential.user?.phoneNumber);
-
-  if (userCredential.user != null) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-      "Sign in as ${userCredential.user!.displayName!}",
-      style: TextStyle(fontSize: 18.0, color: Colors.white),
-    )));
-  }
-}
-// // Hàm đăng nhập bằng Google
-// Future<void> signInWithGoogle(BuildContext context) async {
-//   try {
-//     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-//     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-//     AuthCredential credential = GoogleAuthProvider.credential(
-//       accessToken: googleAuth?.accessToken,
-//       idToken: googleAuth?.idToken,
-//     );
-//     UserCredential userCredential =
-//         await FirebaseAuth.instance.signInWithCredential(credential);
-
-//     Navigator.pushReplacement(
-//         context, MaterialPageRoute(builder: (context) => const Homepage()));
-
-//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//       content: Text(
-//         "Sign in as ${userCredential.user!.displayName!}",
-//         style: TextStyle(fontSize: 18.0, color: Colors.white),
-//       ),
-//     ));
-//   } catch (e) {
-//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//       content: Text(
-//         "Đăng nhập bằng Google thất bại: $e",
-//         style: const TextStyle(fontSize: 18.0, color: Colors.redAccent),
-//       ),
-//     ));
-//   }
-// }

@@ -2,6 +2,7 @@ import 'package:coffee/pages/cartpage.dart';
 import 'package:coffee/pages/homepage.dart';
 import 'package:coffee/pages/itempage.dart';
 import 'package:coffee/pages/profilepage.dart';
+import 'package:coffee/screens/login_screen.dart';
 import 'package:coffee/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "homepage": (context) => Homepage(),
         //"/": (context) => Homepage(),
-        // "login_screen": (context) => loginScreen(),
+        "login_screen": (context) => LoginScreen(),
         //"register_screen": (context) => RegScreen(),
         //   "homepage": (context) => Homepage(),
         "cartPage": (context) => cartPage(),

@@ -39,10 +39,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               child: Container(
                 height: 53,
@@ -74,7 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 53,
                 width: 320,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.black,
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: Colors.white),
                 ),
@@ -84,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                        color: Colors.white),
                   ),
                 ),
               ),
