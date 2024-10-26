@@ -1,7 +1,8 @@
-import 'package:coffee/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePageAppBar extends StatelessWidget {
+  const ProfilePageAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

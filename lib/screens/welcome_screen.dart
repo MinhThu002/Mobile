@@ -1,30 +1,30 @@
 import 'package:coffee/screens/register_screen.dart';
-import 'package:coffee/widgets/google_botton.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 184, 96, 23),
-          Color(0xff281537),
-        ])),
+        decoration: const BoxDecoration(color: Colors.black),
         child: Column(
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 200.0),
               child: Image(
                 image: AssetImage('images/logo.png'),
-                width: 100, // Adjust the width
-                height: 100, // Adjust the height
+                width: 150, // Adjust the width
+                height: 150, // Adjust the height
               ),
             ),
             const SizedBox(
@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const loginScreen()));
+                        builder: (context) => const LoginScreen()));
               },
               child: Container(
                 height: 53,
@@ -90,10 +90,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const Text(
-              'Login with Google',
-              style: TextStyle(fontSize: 17, color: Colors.white),
-            ), //
+
             const SizedBox(
               height: 12,
             ),
@@ -109,8 +106,7 @@ class WelcomeScreen extends StatelessWidget {
             //     height: 40,
             //   ),
             // ),
-            const SizedBox(height: 12),
-            GoogleSignInButton(), // Thay thế bằng widget GoogleSignInButton
+            // Thay thế bằng widget GoogleSignInButton
           ],
         ),
       ),

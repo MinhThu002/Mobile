@@ -1,7 +1,53 @@
+import 'package:coffee/pages/homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
-class loginScreen extends StatelessWidget {
-  const loginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // // Hàm đăng nhập bằng email và mật khẩu
+  // Future<void> signInWithEmailAndPassword(BuildContext context) async {
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(
+  //             email: emailController.text.trim(),
+  //             password: passwordController.text.trim());
+
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => Homepage()));
+
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //         content: Text(
+  //       "Đăng nhập thành công!",
+  //       style: TextStyle(fontSize: 18.0, color: Colors.white),
+  //     )));
+  //   } on FirebaseAuthException catch (e) {
+  //     String message = "";
+  //     if (e.code == 'user-not-found') {
+  //       message = "Tài khoản không tồn tại.";
+  //     } else if (e.code == 'wrong-password') {
+  //       message = "Mật khẩu không chính xác.";
+  //     } else {
+  //       message = "Đã xảy ra lỗi: ${e.message}";
+  //     }
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text(
+  //         message,
+  //         style: TextStyle(fontSize: 18.0, color: Colors.redAccent),
+  //       ),
+  //     ));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +62,7 @@ class loginScreen extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  Color.fromARGB(100, 184, 63, 23),
+                  Color.fromARGB(217, 0, 123, 255),
                   Color(0xff281537),
                 ]),
               ),
@@ -58,7 +104,7 @@ class loginScreen extends StatelessWidget {
                               'Gmail',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(175, 184, 63, 23),
+                                color: Color.fromARGB(217, 0, 123, 255),
                               ),
                             )),
                       ),
@@ -72,7 +118,7 @@ class loginScreen extends StatelessWidget {
                               'Password',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(175, 184, 63, 23),
+                                color: Color.fromARGB(217, 0, 123, 255),
                               ),
                             )),
                       ),
@@ -99,7 +145,7 @@ class loginScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
                           gradient: const LinearGradient(colors: [
-                            Color.fromARGB(175, 184, 63, 23),
+                            Color.fromARGB(217, 0, 123, 255),
                             Color(0xff281537),
                           ]),
                         ),
@@ -116,30 +162,38 @@ class loginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 150,
                       ),
-                      const Align(
-                        alignment: Alignment.bottomRight,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Don't have account?",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            ),
-                            Text(
-                              "Sign up",
-                              style: TextStyle(
-
-                                  ///done login page
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
-                                  color: Colors.black),
-                            ),
-                          ],
+                      Container(
+                        child: SignInButton(
+                          Buttons.google,
+                          onPressed: () {
+                            signInWithGoogle(context);
+                          },
                         ),
-                      )
+                      ),
+                      // const Align(
+                      //   alignment: Alignment.bottomRight,
+                      //   child: Column(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.end,
+                      //     children: [
+                      //       Text(
+                      //         "Don't have account?",
+                      //         style: TextStyle(
+                      //             fontWeight: FontWeight.bold,
+                      //             color: Colors.grey),
+                      //       ),
+                      //       Text(
+                      //         "Sign up",
+                      //         style: TextStyle(
+
+                      //             ///done login page
+                      //             fontWeight: FontWeight.bold,
+                      //             fontSize: 17,
+                      //             color: Colors.black),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -151,3 +205,57 @@ class loginScreen extends StatelessWidget {
     );
   }
 }
+
+signInWithGoogle(BuildContext context) async {
+  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  AuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+  print(userCredential.user?.displayName);
+  print(userCredential.user?.email);
+  print(userCredential.user?.phoneNumber);
+
+  if (userCredential.user != null) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      "Sign in as ${userCredential.user!.displayName!}",
+      style: TextStyle(fontSize: 18.0, color: Colors.white),
+    )));
+  }
+}
+// // Hàm đăng nhập bằng Google
+// Future<void> signInWithGoogle(BuildContext context) async {
+//   try {
+//     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+//     AuthCredential credential = GoogleAuthProvider.credential(
+//       accessToken: googleAuth?.accessToken,
+//       idToken: googleAuth?.idToken,
+//     );
+//     UserCredential userCredential =
+//         await FirebaseAuth.instance.signInWithCredential(credential);
+
+//     Navigator.pushReplacement(
+//         context, MaterialPageRoute(builder: (context) => const Homepage()));
+
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//       content: Text(
+//         "Sign in as ${userCredential.user!.displayName!}",
+//         style: TextStyle(fontSize: 18.0, color: Colors.white),
+//       ),
+//     ));
+//   } catch (e) {
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//       content: Text(
+//         "Đăng nhập bằng Google thất bại: $e",
+//         style: const TextStyle(fontSize: 18.0, color: Colors.redAccent),
+//       ),
+//     ));
+//   }
+// }

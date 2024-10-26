@@ -1,7 +1,8 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "cSpell.words": [
-        "homepappbar"
+        "homepappbar",
+        "Profilepage"
     ],
     "C_Cpp.errorSquiggles": "disabled",
     "cmake.sourceDirectory": "C:/flutter/coffee/linux"

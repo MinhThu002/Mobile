@@ -1,5 +1,5 @@
 import 'package:coffee/widgets/profile_page_app_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:coffee/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class Profilepage extends StatelessWidget {
@@ -10,6 +10,7 @@ class Profilepage extends StatelessWidget {
     return Scaffold(
         body: ListView(children: [
       ProfilePageAppBar(),
+      ProfileWidget(),
       Container(
         //temporary height
         // height: 500,

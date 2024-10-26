@@ -1,13 +1,4 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.2.0") // Đảm bảo phiên bản này tương thích với Gradle của bạn
-        classpath("com.google.gms:google-services:4.4.2") // Hoặc phiên bản mới nhất
-    }
-}
+
 
 allprojects {
     repositories {
@@ -26,4 +17,17 @@ subprojects {
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    ext{
+        googlePlayServicesVersion = "17.0.0"
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.2.0") // Đảm bảo phiên bản này tương thích với Gradle của bạn
+        classpath("com.google.gms:google-services:4.4.2") // Hoặc phiên bản mới nhất
+    }
 }

@@ -1,11 +1,9 @@
 import 'package:coffee/pages/cartpage.dart';
 import 'package:coffee/pages/homepage.dart';
 import 'package:coffee/pages/itempage.dart';
-import 'package:coffee/pages/mappage.dart';
 import 'package:coffee/pages/profilepage.dart';
-import 'package:coffee/screens/login_screen.dart';
-import 'package:coffee/screens/register_screen.dart';
 import 'package:coffee/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -27,16 +25,33 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       routes: {
-        // "/": (context) => WelcomeScreen(),
-        "/": (context) => Homepage(),
-        "login_screen": (context) => loginScreen(),
-        "register_screen": (context) => RegScreen(),
+        "homepage": (context) => Homepage(),
+        //"/": (context) => Homepage(),
+        // "login_screen": (context) => loginScreen(),
+        //"register_screen": (context) => RegScreen(),
         //   "homepage": (context) => Homepage(),
         "cartPage": (context) => cartPage(),
         "itemPage": (context) => itemPage(),
         "profilepage": (context) => Profilepage(),
         // "welcome_screen": (context) => WelcomeScreen(),
       },
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.data == null) {
+              return WelcomeScreen();
+            } else {
+              return Homepage();
+            }
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
