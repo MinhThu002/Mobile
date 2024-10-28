@@ -10,7 +10,6 @@ class Profilepage extends StatelessWidget {
     return Scaffold(
         body: ListView(children: [
       ProfilePageAppBar(),
-      ProfileWidget(),
       Container(
         //temporary height
         // height: 500,
@@ -22,6 +21,10 @@ class Profilepage extends StatelessWidget {
             topRight: Radius.circular(35),
           ),
         ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: 15),
+        child: ProfileWidget(),
       ),
     ]));
   }
