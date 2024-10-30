@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:777012001672:android:3d1a7b085037a85701583d",
         "android_client_info": {
-          "package_name": "com.example.coffee"
+          "package_name": ""
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "777012001672-a32i3jtlt28j2kos1egred0e2nn9odb7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.coffee",
+            "package_name": "",
             "certificate_hash": "c2c9b1d91928fc1a8bdc3ab7cbf7ea9db04bdf4d"
           }
         },
