@@ -2,6 +2,7 @@ import 'package:coffee/pages/cartpage.dart';
 import 'package:coffee/pages/homepage.dart';
 import 'package:coffee/pages/inforuser.dart';
 import 'package:coffee/pages/itempage.dart';
+import 'package:coffee/pages/mappage.dart';
 import 'package:coffee/pages/profilepage.dart';
 import 'package:coffee/screens/login_screen.dart';
 import 'package:coffee/screens/welcome_screen.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         "itemPage": (context) => itemPage(),
         "profilepage": (context) => Profilepage(),
         "inforuser": (context) => Inforuser(),
+        //  "mappage": (context) => Mappage(),
         // "welcome_screen": (context) => WelcomeScreen(),
       },
       home: StreamBuilder<User?>(
